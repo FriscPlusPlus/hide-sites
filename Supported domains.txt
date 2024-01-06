@@ -1,0 +1,8 @@
+Supported domains:
+- google
+- bing
+- yahoo
+- duckduckgo.com/
+
+Dorking
+-site:SITEHERE
