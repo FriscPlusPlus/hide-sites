@@ -13,7 +13,7 @@ const addDomain = function () {
     localStorage.setItem("domains", JSON.stringify(urls.value));
     saveInStorage();
     domain.value = "";
-   // const section: HTMLElement = document.getElementById("domains-section")!;
+    // const section: HTMLElement = document.getElementById("domains-section")!;
     // section.scrollTo(0, 10000);
   }
 };
@@ -63,12 +63,12 @@ onMounted(() => {
       </div>
     </nav>
 
-    <section id="domains-section" class="section is-large fixed-size">
-      <div
-        class="item box"
-        v-for="[index, url] of urls.entries()"
-        v-if="urls.length > 0"
-      >
+    <section
+      id="domains-section"
+      class="section is-large fixed-size"
+      v-if="urls.length > 0"
+    >
+      <div class="item box" v-for="[index, url] of urls.entries()">
         <p>{{ url }}</p>
         <button
           class="delete is-small"
@@ -76,10 +76,14 @@ onMounted(() => {
           v-bind:index="index"
         ></button>
       </div>
+    </section>
 
-      <div class="section is-large" v-if="urls.length === 0">
-        <p>Place holder for non existing urls!</p>
-      </div>
+    <section class="section is-large" v-if="urls.length === 0">
+      <img
+        src="../../public/icon/no-site.png"
+        alt="Looks like there are no websites that you want to hide!"
+      />
+      <p>Seems like you don't want to hide any website yet!</p>
     </section>
 
     <footer class="has-text-centered is-flex-align-items-flex-end mt-auto">
@@ -111,15 +115,14 @@ onMounted(() => {
 </template>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 html,
 body {
   max-width: 300px;
   max-height: 400px;
-  min-width: 300px;
-  min-height: 400px;
   padding: 0;
   margin: 0;
-  font-family: monospace;
+  font-family: "Lato", sans-serif;
 }
 
 footer {
