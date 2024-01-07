@@ -1,7 +1,34 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
-const urls = ref(localStorage.getItem("urls") || []);
+const urls = ref([]);
+const domain = ref();
+
+const addDomain = function () {
+  urls.value.push(domain.value);
+  localStorage.setItem("domains", JSON.stringify(urls.value));
+  saveInStorage();
+  domain.value = "";
+};
+
+const removeDomain = function (event) {
+  const itemIndex: Number = parseInt(event.target.getAttribute("index"));
+  urls.value.splice(itemIndex, 1);
+  saveInStorage();
+};
+
+const saveInStorage = () => {
+  localStorage.setItem("domains", JSON.stringify(urls.value));
+};
+
+onMounted(() => {
+  if (!localStorage.getItem("domains")) {
+    localStorage.setItem("domains", JSON.stringify([]));
+  }
+
+  const domainsData: string[] = JSON.parse(localStorage.getItem("domains"));
+  urls.value = domainsData;
+});
 </script>
 
 <template>
@@ -24,9 +51,17 @@ const urls = ref(localStorage.getItem("urls") || []);
     </nav>
 
     <section class="section is-large">
-      <div class="item box" v-for="url of urls" v-if="urls.length > 0">
+      <div
+        class="item box"
+        v-for="[index, url] of urls.entries()"
+        v-if="urls.length > 0"
+      >
         <p>{{ url }}</p>
-        <button class="delete is-small"></button>
+        <button
+          class="delete is-small"
+          @click="removeDomain"
+          v-bind:index="index"
+        ></button>
       </div>
 
       <div class="section is-large" v-if="urls.length === 0">
@@ -42,9 +77,18 @@ const urls = ref(localStorage.getItem("urls") || []);
         <button id="add-button" class="button is-ghost">&#10133;</button>
       </div>-->
       <fieldset class="field-set">
-        <input type="text" placeholder="www.example.com" class="input-set" />
+        <input
+          type="text"
+          placeholder="www.example.com"
+          class="input-set"
+          v-model="domain"
+        />
 
-        <button id="add-button" class="form-submit button is-ghost">
+        <button
+          id="add-button"
+          class="form-submit button is-ghost"
+          @click="addDomain"
+        >
           &#10133;
         </button>
       </fieldset>
@@ -55,6 +99,8 @@ const urls = ref(localStorage.getItem("urls") || []);
 <style>
 html,
 body {
+  max-width: 300px;
+  max-height: 400px;
   min-width: 300px;
   min-height: 400px;
   padding: 0;
@@ -86,6 +132,7 @@ footer {
 .field-set {
   display: flex;
   justify-content: space-between;
+  background-color: #fff;
 }
 
 .input-set {
@@ -98,5 +145,9 @@ footer {
 .input-set:focus,
 input:focus {
   outline: none;
+}
+
+.navbar-brand {
+  background-color: #fff;
 }
 </style>
