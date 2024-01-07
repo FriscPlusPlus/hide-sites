@@ -53,12 +53,7 @@ onMounted(() => {
     >
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img
-            src="../../public/icon/logo.png"
-            alt="Hide sites!"
-            width="112"
-            height="28"
-          />
+          <img src="/icon/logo.png" alt="Hide sites!" width="112" height="28" />
         </a>
       </div>
     </nav>
@@ -80,19 +75,13 @@ onMounted(() => {
 
     <section class="section is-large" v-if="urls.length === 0">
       <img
-        src="../../public/icon/no-site.png"
+        src="/icon/no-site.png"
         alt="Looks like there are no websites that you want to hide!"
       />
       <p>Seems like you don't want to hide any website yet!</p>
     </section>
 
     <footer class="has-text-centered is-flex-align-items-flex-end mt-auto">
-      <!--  <div class="field has-addons">
-        <p class="control is-expanded">
-          <input class="input" type="text" placeholder="example.com" />
-        </p>
-        <button id="add-button" class="button is-ghost">&#10133;</button>
-      </div>-->
       <fieldset class="field-set">
         <input
           type="text"
@@ -149,7 +138,7 @@ footer {
 .field-set {
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: #e5e6e8 !important;
 }
 
 .input-set {
