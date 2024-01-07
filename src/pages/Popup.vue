@@ -5,13 +5,20 @@ const urls = ref([]);
 const domain = ref();
 
 const addDomain = function () {
-  urls.value.push(domain.value);
-  localStorage.setItem("domains", JSON.stringify(urls.value));
-  saveInStorage();
-  domain.value = "";
+  if (domain.value.length > 0) {
+    urls.value.push(domain.value);
+
+    urls.value = urls.value.reverse();
+
+    localStorage.setItem("domains", JSON.stringify(urls.value));
+    saveInStorage();
+    domain.value = "";
+   // const section: HTMLElement = document.getElementById("domains-section")!;
+    // section.scrollTo(0, 10000);
+  }
 };
 
-const removeDomain = function (event) {
+const removeDomain = function (event: any) {
   const itemIndex: Number = parseInt(event.target.getAttribute("index"));
   urls.value.splice(itemIndex, 1);
   saveInStorage();
@@ -19,6 +26,12 @@ const removeDomain = function (event) {
 
 const saveInStorage = () => {
   localStorage.setItem("domains", JSON.stringify(urls.value));
+};
+
+const onEnterPress = (e: KeyboardEvent) => {
+  if (e.key === "Enter") {
+    addDomain();
+  }
 };
 
 onMounted(() => {
@@ -50,7 +63,7 @@ onMounted(() => {
       </div>
     </nav>
 
-    <section class="section is-large">
+    <section id="domains-section" class="section is-large fixed-size">
       <div
         class="item box"
         v-for="[index, url] of urls.entries()"
@@ -82,6 +95,7 @@ onMounted(() => {
           placeholder="www.example.com"
           class="input-set"
           v-model="domain"
+          @keypress="onEnterPress"
         />
 
         <button
@@ -149,5 +163,14 @@ input:focus {
 
 .navbar-brand {
   background-color: #fff;
+}
+
+.fixed-size {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  width: 100%;
+  overflow-y: scroll;
 }
 </style>
