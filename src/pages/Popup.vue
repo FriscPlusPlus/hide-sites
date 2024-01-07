@@ -107,8 +107,8 @@ onMounted(() => {
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 html,
 body {
-  max-width: 300px;
-  max-height: 400px;
+  width: 300px;
+  height: 400px;
   padding: 0;
   margin: 0;
   font-family: "Lato", sans-serif;
@@ -132,7 +132,6 @@ footer {
 
 .add-button:hover {
   text-decoration: none !important;
-  background-color: #fff;
 }
 
 .field-set {
